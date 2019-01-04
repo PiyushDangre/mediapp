@@ -68,6 +68,8 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         }
     }
     
+    mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
+
     // Check input errors before inserting in database
     if(empty($username_err) && empty($password_err) && empty($confirm_password_err)){
         
@@ -85,7 +87,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             // Attempt to execute the prepared statement
             if(mysqli_stmt_execute($stmt)){
                 // Redirect to login page
-                header("location: index.php");
+                echo '<script> location.replace("index.php"); </script>';
             } else{
                 echo "Something went wrong. Please try again later.";
             }

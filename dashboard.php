@@ -1,8 +1,14 @@
-<?php require 'header.php' ;?>
+<?php 
+// // Initialize the session
+// if(!isset($_SESSION)) 
+//     { 
+//         session_start(); 
+//     } 
+
+require 'header.php' ;?>
 
 <?php
-// Initialize the session
-session_start();
+
 require_once "Classes/PHPExcel.php";
 
         $tmpfname = "data/data.xlsx";

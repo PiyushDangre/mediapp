@@ -31,5 +31,8 @@
       <li ><a href="#">Home</a></li>
       <li><a href="logout.php">Logout</a></li>
     </ul>
+    <ul class="nav navbar-nav navbar-right">
+    <li><a href="#"><span class="glyphicon glyphicon-upload"></span>&nbsp;Upload Excel</a></li>
+    </ul>
   </div>
 </nav>

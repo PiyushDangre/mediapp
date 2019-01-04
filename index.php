@@ -1,6 +1,12 @@
 <?php 
-// Initialize the session
-session_start();
+// // Initialize the session
+// if(!isset($_SESSION)) 
+//     { 
+//         session_start(); 
+//     } 
+
+// Include config file
+require_once "config.php";
 
 require 'header.php' ; ?>
 
@@ -8,12 +14,10 @@ require 'header.php' ; ?>
  
 // Check if the user is already logged in, if yes then redirect him to welcome page
 if(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true){
-  header("location: dashboard.php");
+    echo '<script> location.replace("dashboard.php"); </script>';
   exit;
 }
  
-// Include config file
-require_once "config.php";
  
 // Define variables and initialize with empty values
 $username = $password = "";
@@ -28,6 +32,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         $username_err = "Please enter username.";
     } else{
         $username = trim($_POST["username"]);
+        echo "username is not empty";
     }
     
     // Check if password is empty
@@ -36,14 +41,19 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         $password_err = "Please enter your password.";
     } else{
         $password = trim($_POST["password"]);
+        echo "pw is not empty";
     }
-    
+    mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
+
     // Validate credentials
     if(empty($username_err) && empty($password_err)){
         // Prepare a select statement
-        $sql = "SELECT id, username, password FROM users WHERE username = ?";
+        $sql = "SELECT ID, username, password FROM users WHERE username = ?";
         
         if($stmt = mysqli_prepare($link, $sql)){
+
+            echo "hello" ;
+
             // Bind variables to the prepared statement as parameters
             mysqli_stmt_bind_param($stmt, "s", $param_username);
             
@@ -71,8 +81,8 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                             $_SESSION["id"] = $id;
                             $_SESSION["username"] = $username;                            
                             
-                            // Redirect user to welcome page
-                            header("location: dashboard.php");
+                           // Redirect to login page
+                            echo '<script> location.replace("dashboard.php"); </script>';
                         } else{
                             // Display an error message if password is not valid
                             $password_err = "The password you entered was not valid.";
